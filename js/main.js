@@ -1,4 +1,7 @@
-
+// Globally scoped... there is probbably a better way of doing this but it works
+//
+// This variable specifically refers to whether or not the login request has fired, and is referenced by the 
+// track() and processLogin() functions so they can ensure they don't fire the login action twice
 var loginFired = false;
 
 $(function(){
@@ -74,9 +77,9 @@ function processLogin(){
 		
 		track('Tracking: User Login');	
 		
+		//Wait 2000ms, then check to see whether or not to fire the login event
 		setTimeout(function(){ 
-			
-			//Wait 2000ms, then 				
+							
 			console.log('Login: Timeout request firing');
 			
 			if(!loginFired){ 
@@ -85,9 +88,12 @@ function processLogin(){
 				$(document.body).trigger('fireProcessLogin');
 				loginFired = true; 
 				
+			} else {
+				
+				console.log('Login already fired, deferring');
+				
 			}
 			
-				
 		},2000);	
 				
 	}
@@ -105,22 +111,20 @@ function makeLoginRequest(username,password){
 				if(data.status === 'ok'){ 
 					
 					window.location = 'success.html';
-					//console.log('Login: Forward to success page');
-					//toggleLoadingGif();
 				
 				} else {
 					
-					console.log(data);
 					handleLoginError(data);
 					
+					//Very important to update this here, otherwise user can never log in after first failed validation!
+					loginFired = false;
+					
 				}
-				
 				
 			}
 			).done(function(){ /* console.log('Login: Login post finished');*/ }
 			).fail(function(){ /* console.log('Login: Post failed?!'); */ });	
 	
 }
-
 
 function toggleLoadingGif(){ $('#loading').toggle(); }
