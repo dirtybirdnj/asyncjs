@@ -16,17 +16,26 @@ $users = array(
 function checkLogin($users,$username,$password){
 	
 	$response = array();
+
+	$userRecordFound = false;
 	
 	foreach($users as $user){
 		
-		if($username === $user['username']){
+
+		
+		if(trim($username) === $user['username']){
+			
+			$userRecordFound = true;
 			
 			if($password === $user['password']){ $response = array('status' => 'ok', 'message' => 'Login completed successfully'); } 
 			
-			else { $response = array('status' => 'fail','type' => 'password', 'Invalid password, please try again'); }	
+			else { $response = array('status' => 'fail','type' => 'password', 'message' => 'Invalid password, please try again'); }	
 			
 		} else { $response = array('status' => 'fail', 'type' => 'username', 'message' => 'Invalid username, please try again'); }
 		
+		//If we've found the user, don't keep iterating over the rest of the records
+		if($userRecordFound) break;
+	
 	}
 	
 	

@@ -35,6 +35,13 @@ function validateForm(){
 	
 }
 
+function handleLoginError(response){
+	
+	alert(response.message);
+	$('#' + response.type).focus();
+	
+}
+
 function track(){
 	
 	console.log('init tracking');
@@ -56,11 +63,9 @@ function processLogin(username,password){
 		
 		console.log('valid form data, proceeding');		
 		
-		//track('User Login');
+		track('User Login');
 		
 		var hashPass = md5(password);
-		
-		console.log(hashPass);
 		
 		$.post('post.php',{'username': username,'password': hashPass},function(data){
 			
@@ -68,21 +73,14 @@ function processLogin(username,password){
 				
 				toggleLoadingGif();
 				console.log(data);
-				
+				handleLoginError(data);
 				
 			}
 			
 			
-		}).done(function(){
-			
-			console.log('Post finished');
-			
-			
-		}).fail(function(){
-			
-			console.log('Post failed?!');
-			
-		});	
+		}
+		).done(function(){ console.log('Login post finished'); }
+		).fail(function(){ console.log('Post failed?!'); });	
 		
 	}
 	
