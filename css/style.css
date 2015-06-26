@@ -1,0 +1,25 @@
+#main {
+	border: 1px solid red;
+	width: 50%;
+	max-width: 300px;
+	margin: 0 auto;
+	padding: 0px 0px 0px 30px;
+	
+}
+
+#main h1 {
+	
+	border: 1px solid blue;
+	margin-right: 30px;
+	text-align: center;
+	
+}
+
+#main img {
+	
+	display: none;
+	position: relative;
+	top: 2px;
+	margin: 0px 0px 0px 10px;
+	
+}

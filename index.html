@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Async JS Example</title>
+  <meta name="description" content="An example of Asynchronus non-blocking Javascript">
+  <meta name="author" content="Mat Gilbert">
+
+  <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  
+</head>
+
+<body>
+  <div id="main">
+	  <h1>Log In</h1>	
+	  <form id="loginForm">
+		  <p>Username: <input type="text" id="username" value="matgilbert" /></p>
+		  <p>Password: <input type="text" id="password" value="password" /></p>	  
+		  <p>
+			 <input type="submit" value="Submit"/>	  
+			 <img id="loading" src="img/loading.gif" alt="Loading, please wait"/>
+		  </p>
+	  </form>	
+  </div>
+	
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>	
+  <script src="js/md5.min.js"></script>
+  <script src="js/main.js"></script>
+  
+</body>
+</html>
