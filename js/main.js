@@ -1,11 +1,18 @@
+
+var loginFired = false;
+
 $(function(){
 	
 	$('#loginForm').submit(function(event){
 		
 		event.preventDefault();
-		processLogin($('#username').val(),$('#password').val());
+		processLogin();
 		
 	});
+	
+	$(document.body).on('fireProcessLogin', function() {
+	    makeLoginRequest($('#username').val(),$('#password').val());
+	});	
 	
 });
 
@@ -27,12 +34,15 @@ function validateForm(){
 
 	}
 	
+	if(formIsValid){ $('#errorMsg').text(''); }
+	
 	return formIsValid;
 	
 }
 
 function handleLoginError(response){
 	
+	$('#loading').hide();
 	$('#errorMsg').text(response.message);
 	$('#' + response.type).focus();
 	
@@ -44,32 +54,38 @@ function track(){
 	
 	$.post('tracking.php',{'action' : 'userLogin'},function(data){
 		
-		console.log('Tracking: finished');		
+		console.log('Tracking: finished');
+		
+		if(!loginFired){ $(document.body).trigger('fireProcessLogin'); }
 		
 	});	
 	
 	return true;
 }
 
-function processLogin(username,password){
+function processLogin(){
 	
 	console.log('Login: processLogin called');
-	
-	toggleLoadingGif();
-	
+
 	if(validateForm()){
 		
-		if(track('Tracking: User Login')){
-			
-			console.log('Tracking finished first!');
-			
-		}
-			
+		toggleLoadingGif();
+		$('#errorMsg').text();
+		
+		track('Tracking: User Login');	
+		
 		setTimeout(function(){ 
 			
 			//Wait 2000ms, then 				
 			console.log('Login: Timeout request firing');
-			makeLoginRequest(username,password); 
+			
+			if(!loginFired){ 
+				
+				console.log('Login request has NOT fired');
+				$(document.body).trigger('fireProcessLogin');
+				loginFired = true; 
+				
+			}
 			
 				
 		},2000);	
@@ -78,7 +94,7 @@ function processLogin(username,password){
 	
 }
 
-function makeLoginRequest(username,password){
+function makeLoginRequest(username,password){	
 	
 			console.log('Login: makeLoginRequest() - Performing POST request');
 			
@@ -94,7 +110,6 @@ function makeLoginRequest(username,password){
 				
 				} else {
 					
-					toggleLoadingGif();
 					console.log(data);
 					handleLoginError(data);
 					

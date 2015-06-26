@@ -1,7 +1,7 @@
 <?php
 	
 //Ensuring that the tracking code takes longer than the initial login post request
-sleep(0);
+//sleep(3);
 
 $response = array('status' => 200, 'message' => 'ok');
 

@@ -2,7 +2,7 @@
 
 
 //Control timing of the login request
-sleep(8);
+sleep(1);
 	
 include_once('functions.php');	
 
