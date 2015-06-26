@@ -1,5 +1,4 @@
 #main {
-	border: 1px solid red;
 	width: 50%;
 	max-width: 300px;
 	margin: 0 auto;
@@ -9,7 +8,6 @@
 
 #main h1 {
 	
-	border: 1px solid blue;
 	margin-right: 30px;
 	text-align: center;
 	
